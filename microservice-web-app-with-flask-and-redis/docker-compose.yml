@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  flask_app:
+    build: ./flask_app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - redis
+      - db
+    environment:
+      - REDIS_HOST=redis
+    networks:
+      - app_network
+
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    networks:
+      - app_network
+
+  db:
+    image: "postgres:13"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: flask_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  postgres_data:

@@ -1,0 +1,10 @@
+# Use the official Postgres base image
+FROM postgres:13
+
+# Set environment variables for the Postgres setup
+ENV POSTGRES_USER=user
+ENV POSTGRES_PASSWORD=password
+ENV POSTGRES_DB=flask_db
+
+# Expose port 5432 to communicate with Postgres
+EXPOSE 5432
